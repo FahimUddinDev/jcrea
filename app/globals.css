@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,6 +7,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #fd853a;
+  --secondary: #ffffff;
+  --heading: #171717;
+  --body: #344054;
+  --font-urbanist: "Urbanist", sans-serif;
+  --font-lufga: "Lufga", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,11 +25,23 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-urbanist), var(--font-lufga), sans-serif;
+}
+
+@layer components {
+  .container {
+    @apply max-w-[1440px] w-full mx-auto;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .font-urbanist {
+    font-family: var(--font-urbanist), sans-serif;
+  }
+  .font-lufga {
+    font-family: var(--font-lufga), sans-serif;
   }
 }
