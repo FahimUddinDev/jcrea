@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useId } from "react";
+import { useEffect, useId, useState } from "react";
 
 interface ServiceCardProps {
   image: string;
@@ -14,10 +14,21 @@ function ServiceCard({ image, title, link }: ServiceCardProps) {
   const rawId = useId();
   const clipId = `service-card-clip-${rawId.replace(/[:]/g, "")}`;
 
+  const [isMd, setIsMd] = useState(true);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    setIsMd(mediaQuery.matches);
+
+    const handler = (e: MediaQueryListEvent) => setIsMd(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
   const r = 0.06;
-  const rCenter = 0.095;
-  const notchX = 0.77;
-  const notchY = 0.81;
+  const rCenter = isMd ? 0.15 : 0.1;
+  const notchX = isMd ? 0.69 : 0.77;
+  const notchY = isMd ? 0.75 : 0.81;
 
   const d = `
     M ${r},0
@@ -55,61 +66,60 @@ function ServiceCard({ image, title, link }: ServiceCardProps) {
   `;
 
   return (
-    <Link href={link} className="bg-[rgba(104,104,104,0.2)] block relative">
-      <div style={{ clipPath: `url(#${clipId})` }}>
-        <svg width="0" height="0" className="absolute">
-          <defs>
-            <clipPath id={clipId} clipPathUnits="objectBoundingBox">
-              <path d={d} />
-            </clipPath>
-          </defs>
-        </svg>
+    <div className="px-0.5 pb-14">
+      <Link href={link} className=" block relative group">
+        <div
+          style={{ clipPath: `url(#${clipId})` }}
+          className="bg-[rgba(104,104,104,0.2)]"
+        >
+          <svg width="0" height="0" className="absolute ">
+            <defs>
+              <clipPath id={clipId} clipPathUnits="objectBoundingBox">
+                <path d={d} />
+              </clipPath>
+            </defs>
+          </svg>
 
-        <h1 className="text-32 font-medium text-secondary pt-11 px-9 pb-6 border-b-2 border-[rgba(249,250,251,0.3)] mb-[50px]">
-          {title}
-        </h1>
+          <h1 className="text-32 font-medium text-secondary pt-11 px-9 pb-6 border-b-2 border-[rgba(249,250,251,0.3)] mb-[50px]">
+            {title}
+          </h1>
 
-        <div className="relative">
-          <Image
-            src={image}
-            alt={title}
-            width={416}
-            height={352}
-            className="w-full h-auto"
-          />
+          <div className="relative">
+            <Image
+              src={image}
+              alt={title}
+              width={416}
+              height={352}
+              className="w-full h-auto"
+            />
+          </div>
         </div>
-      </div>
 
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        className="absolute inset-0 w-full h-full pointer-events-none"
-      >
-        <path
-          d={dBorder}
-          fill="none"
-          stroke="rgba(249, 250, 251, 0.3)"
-          strokeWidth="0.4"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
-
-      <div className="absolute bottom-0 right-0 size-20 md:size-[114px] bg-background rounded-full flex items-center justify-center">
         <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          className="w-[40%] h-[40%] text-white"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          className="absolute inset-0 w-full h-full pointer-events-none"
         >
           <path
-            d="M7 17L17 7M17 7H8M17 7V16"
-            stroke="currentColor"
+            d={dBorder}
+            fill="none"
+            stroke="rgba(249, 250, 251, 0.3)"
             strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
           />
         </svg>
-      </div>
-    </Link>
+
+        <div className="absolute bottom-0 right-0 size-20 md:size-[114px] bg-[#1D2939] rounded-full flex items-center justify-center">
+          <Image
+            src="/assets/icons/up-right.svg"
+            alt="arrow"
+            width={72}
+            height={72}
+            className="size-[50px] md:size-[72px] group-hover:rotate-45 transition-all duration-300 ease-in-out"
+          />
+        </div>
+      </Link>
+    </div>
   );
 }
 

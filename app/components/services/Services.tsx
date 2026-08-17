@@ -4,15 +4,15 @@ import ServiceCard from "./ServiceCard";
 
 function Services() {
   return (
-    <div className="container px-4 py-10  lg:px-[70px] lg:pb-14 lg:pt-[116px] relative rounded-[50px] overflow-hidden">
+    <div className="container px-4 pb-4 pt-10  lg:px-[70px] lg:pb-9 lg:pt-[116px] relative rounded-[50px] overflow-hidden">
       <Image
-        src={"/assets/service-bg.jpg"}
+        src={"/assets/service-bg.png"}
         alt={""}
         width={1440}
         height={878}
         className="w-full h-full object-cover absolute top-0 left-0"
       />
-      <div className="flex justify-between relative z-10 gap-4 sm:gap-8 mb-6 sm:mb-10 lg:mb-[96px]">
+      <div className="flex justify-between relative z-30 gap-4 sm:gap-8 mb-6 sm:mb-10 lg:mb-[96px]">
         <h1 className="text-secondary text-48 font-semibold">
           My <span className="text-primary">Services</span>
         </h1>

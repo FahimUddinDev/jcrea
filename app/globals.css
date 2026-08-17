@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -44,4 +44,12 @@ body {
   .font-lufga {
     font-family: var(--font-lufga), sans-serif;
   }
+}
+
+.swiper .swiper-pagination-bullet {
+  @apply !w-4 !h-4 !rounded-full !opacity-100 !bg-white transition-all duration-300;
+}
+
+.swiper .swiper-pagination-bullet-active {
+  @apply !bg-primary !w-[60px] !h-4 !rounded-full !opacity-100;
 }
